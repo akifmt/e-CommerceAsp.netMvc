@@ -1,0 +1,148 @@
+﻿@model eCommerce.MvcWebUI.Models.OdemeViewModel
+
+<div class="checkout">
+    <form method="post">
+        <div class="container">
+            <h1 class="h2 heading-primary mt-lg mb-md clearfix">
+                Ödeme
+            </h1>
+
+            @Html.HiddenFor(x => x.Profil.ProfilId)
+
+            @Html.HiddenFor(x => x.Siparis.SiparisId)
+
+            <div class="checkout-menu clearfix">
+
+                <div class="dropdown pull-right checkout-review-dropdown">
+                    <button class="btn btn-primary mb-sm" id="reviewTable" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-shopping-cart"></i>
+                        @Model.Siparis.ToplamOdeme  ₺
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="reviewTable">
+                        <h3>Ürünler </h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Ürün</th>
+                                    <th class="text-center">Miktar</th>
+                                    <th class="text-right">Toplam</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                @foreach (var item in Model.Siparis.SiparisUrunler)
+                            {
+                                    <tr>
+                                        <td>@item.UrunAdi</td>
+                                        <td class="text-center">@item.UrunMiktar</td>
+                                        <td class="text-right">@item.UrunFiyati  ₺</td>
+                                    </tr>
+                            }
+
+
+                            </tbody>
+
+                            <tfoot>
+                                <tr>
+                                    <td class="text-right" colspan="2">Genel Toplam</td>
+                                    <td class="text-right">@Model.Siparis.ToplamOdeme  ₺</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-col">
+                        <h3>Fatura &amp; Adres Bilgileri</h3>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                                <div class="form-group wide">
+                                    <label>TCKimlikNo<span class="required">*</span></label>
+                                    @Html.TextBoxFor(x => x.Profil.TCKimlikNo, new { @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6 col-md-12">
+                                <div class="form-group">
+                                    <label>Ad<span class="required">*</span></label>
+                                    @Html.TextBoxFor(x => x.Profil.Ad, new { @class="form-control", required ="required" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6 col-md-12">
+                                <div class="form-group">
+                                    <label>Soyad<span class="required">*</span></label>
+                                    @Html.TextBoxFor(x => x.Profil.Soyad, new { @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                                <div class="form-group wide">
+                                    <label>Telefon<span class="required">*</span></label>
+                                    @Html.TextBoxFor(x => x.Profil.Telefon, new { @class = "form-control", required = "required" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6 col-md-12">
+                                <div class="form-group">
+                                    <label>Adres<span class="required">*</span></label>
+                                    @Html.DropDownListFor(x=>x.SelectedAdresId,new SelectList(Model.Adresler,"Id","AdresAdi"),"Adres Seçiniz...", new { @class="form-control"})
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-col">
+                        <h3>Kargo</h3>
+                        <div class="ship-list">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" value="shipping-method-1" name="shipping[method]" checked="checked">
+                                    Standart
+                                </label>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-col">
+                        <h3>Ödeme Yöntemi</h3>
+
+                        <div class="checkout-payment-method">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" value="checkmo" name="payment[method]" checked="checked" class="payment-card-check">
+                                    Hesaba Havale
+                                </label>
+                            </div>
+
+                        </div>
+
+                        <div class="checkout-review-action">
+                            <h5>Genel Toplam <span>@Model.Siparis.ToplamOdeme ₺</span></h5>
+                            <button type="submit" class="btn btn-primary">Ödeme Yap</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,94 @@
+﻿@model IEnumerable<eCommerce.Entities.Concrete.Adres>
+
+<section class="page-header mb-lg">
+
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="/">Anasayfa</a></li>
+
+            <li class="active">Adres</li>
+        </ul>
+    </div>
+</section>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9 col-md-push-3 my-account form-section">
+            <div class="cart">
+                <div class="container">
+                    <div>
+                        @TempData["AdresSonuc"]
+                    </div>
+                    <h1 class="h2 heading-primary mt-lg clearfix">
+                        <span>Adresler</span>
+                        
+                    </h1>
+
+                    <div class="row">
+                        <div class="col-md-9 col-lg-9">
+                            <div class="cart-table-wrap">
+                                <table class="cart-table">
+                                    <thead>
+                                        <tr>
+                                            <th>AdresAdi</th>
+                                            <th>Ulke</th>
+                                            <th>Il</th>
+                                            <th>Ilce</th>
+                                            <th>AdresDetay</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td><span class="text-primary">@Html.DisplayFor(modelItem => item.AdresAdi)</span></td>
+                                                <td><span class="text-primary">@Html.DisplayFor(modelItem => item.Ulke)</span></td>
+                                                <td><span class="text-primary">@Html.DisplayFor(modelItem => item.Il)</span></td>
+                                                <td><span class="text-primary">@Html.DisplayFor(modelItem => item.Ilce)</span></td>
+                                                <td><span class="text-primary">@Html.DisplayFor(modelItem => item.AdresDetay)</span></td>
+
+                                                <td>
+                                                    <a href="@Url.Action("AdresSil", "Manage",new { id = item.Id })" title="Adres Sil" class="btn-remove"><i class="fa fa-times"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="6" class="clearfix">
+                                                <a href="/" class="btn btn-default hover-primary btn-continue">Anasayfa</a>
+                                                
+                                                <a href="@Url.Action("AdresEkle","Manage")" class="btn btn-default btn-primary hover-primary btn-update">Yeni Adres Ekle</a>
+                                                <a href="/Manage" class="btn btn-default hover-primary btn-update">Kişisel Bilgi Düzenle</a>
+
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-md-pull-9">
+            <aside class="sidebar">
+
+                <h4>Profil Bilgileri</h4>
+                <ul class="nav nav-list">
+                    <li>
+                        @Html.ActionLink("Kişisel Bilgiler", "Index", "Manage", null, new { @class = "active" })
+                    </li>
+                    <li>
+                        @Html.ActionLink("Adres Bilgileri", "Adres", "Manage", null, new { @class = "active" })
+                    </li>
+                </ul>
+
+            </aside>
+        </div>
+    </div>
+</div>

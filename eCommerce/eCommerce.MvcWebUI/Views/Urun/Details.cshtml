@@ -1,0 +1,138 @@
+﻿@model eCommerce.Entities.Concrete.Urun
+
+
+<section class="page-header mb-lg">
+
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>@Html.ActionLink("Anasayfa", "Index", "Home")
+            </li>
+
+            <li><a href="#">Urunler</a></li>
+            <li class="active">Urun Detay</li>
+        </ul>
+    </div>
+</section>
+
+<div class="container">
+    <div class="product-view">
+        <div class="product-essential">
+            <div class="row">
+                <div class="product-img-box col-sm-5">
+                    <div class="product-img-box-wrapper">
+                        <div class="product-img-wrapper">
+                            @{string imgSrc = Model.UrunImages.Count != 0 ? Model.UrunImages.FirstOrDefault().UrunImageUrl : "/Content/img/demos/shop/products/product1-2.jpg";}
+
+                                <img id="product-zoom" 
+                                     src="@imgSrc" 
+                                     data-zoom-image="@imgSrc" 
+                                     alt="Product main image">
+                        
+                        </div>
+
+                        <a href="#" class="product-img-zoom" title="Zoom">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </a>
+                    </div>
+
+                    <div class="owl-carousel manual" id="productGalleryThumbs">
+                        @foreach (var item in Model.UrunImages)
+                        {
+                            <div class="product-img-wrapper">
+                                <a href="#" data-image="@item.UrunImageUrl" data-zoom-image="@item.UrunImageUrl" class="product-gallery-item">
+                                    <img src="@item.UrunImageUrl" alt="product">
+                                </a>
+                            </div>
+                        }
+                        
+                    </div>
+                </div>
+
+                <div class="product-details-box col-sm-7">
+                    
+                    <h1 class="product-name">
+                        @Html.DisplayFor(model => model.UrunAdi)
+                    </h1>
+
+                    <div class="product-rating-container">
+                        <div class="product-ratings">
+                            <div class="ratings-box">
+                                <div class="rating" style="width:60%"></div>
+                            </div>
+                        </div>
+                        <div class="review-link">
+                            <div class="write-review-link" rel="nofollow">
+                                @Html.DisplayFor(model => model.Kategori.KategoriAdi)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-short-desc">
+                        <p>
+                            @Html.DisplayFor(model => model.UrunAciklama)
+                        </p>
+                    </div>
+
+                    <div class="product-detail-info">
+                        <div class="product-price-box">
+                            <span class="old-price">
+                                @Html.DisplayFor(model => model.UrunFiyati)
+                            </span>
+                            <span class="product-price">
+                                @Html.DisplayFor(model => model.UrunFiyati)
+                            </span>
+                        </div>
+                        <p class="availability">
+                            <span class="font-weight-semibold">Stok:</span>
+                           var | yok
+                        </p>
+                    </div>
+
+                    <div class="product-actions">
+                        
+                        <a href="@Url.Action("SepeteUrunEkle","Sepet",new { urunId=Model.Id })" class="addtocart" title="Sepete Ekle">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span>Sepete Ekle</span>
+                        </a>
+
+                    </div>
+
+                    <div class="product-share-box">
+                        <div class="addthis_inline_share_toolbox"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tabs product-tabs">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#product-desc" data-toggle="tab">Açıklamalar</a>
+                </li>
+                <li>
+                    <a href="#product-add" data-toggle="tab">Detaylar</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="product-desc" class="tab-pane active">
+                    <div class="product-desc-area">
+                        <p>
+                            @Html.DisplayFor(model => model.UrunAciklama)
+                        </p>
+                        
+                    </div>
+                </div>
+                <div id="product-add" class="tab-pane">
+                    @Html.DisplayFor(model => model.UrunAciklama)
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+</div>
+
+
+
+

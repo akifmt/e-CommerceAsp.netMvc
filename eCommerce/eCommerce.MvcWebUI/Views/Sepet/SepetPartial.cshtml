@@ -1,0 +1,260 @@
+﻿@model eCommerce.Entities.Concrete.Sepet
+
+<script src="~/Content/vendor/jquery/jquery.min.js"></script>
+
+<style>
+       /* Styles for dialog window */
+       #small-dialog {
+           background: white;
+           padding: 20px 30px;
+           text-align: left;
+           max-width: 400px;
+           margin: 40px auto;
+           position: relative;
+       }
+
+
+       /**
+    * Fade-zoom animation for first dialog
+    */
+
+       /* start state */
+       .my-mfp-zoom-in .zoom-anim-dialog {
+           opacity: 0;
+           -webkit-transition: all 0.2s ease-in-out;
+           -moz-transition: all 0.2s ease-in-out;
+           -o-transition: all 0.2s ease-in-out;
+           transition: all 0.2s ease-in-out;
+           -webkit-transform: scale(0.8);
+           -moz-transform: scale(0.8);
+           -ms-transform: scale(0.8);
+           -o-transform: scale(0.8);
+           transform: scale(0.8);
+       }
+
+       /* animate in */
+       .my-mfp-zoom-in.mfp-ready .zoom-anim-dialog {
+           opacity: 1;
+           -webkit-transform: scale(1);
+           -moz-transform: scale(1);
+           -ms-transform: scale(1);
+           -o-transform: scale(1);
+           transform: scale(1);
+       }
+
+       /* animate out */
+       .my-mfp-zoom-in.mfp-removing .zoom-anim-dialog {
+           -webkit-transform: scale(0.8);
+           -moz-transform: scale(0.8);
+           -ms-transform: scale(0.8);
+           -o-transform: scale(0.8);
+           transform: scale(0.8);
+           opacity: 0;
+       }
+
+       /* Dark overlay, start state */
+       .my-mfp-zoom-in.mfp-bg {
+           opacity: 0;
+           -webkit-transition: opacity 0.3s ease-out;
+           -moz-transition: opacity 0.3s ease-out;
+           -o-transition: opacity 0.3s ease-out;
+           transition: opacity 0.3s ease-out;
+       }
+       /* animate in */
+       .my-mfp-zoom-in.mfp-ready.mfp-bg {
+           opacity: 0.8;
+       }
+       /* animate out */
+       .my-mfp-zoom-in.mfp-removing.mfp-bg {
+           opacity: 0;
+       }
+
+
+
+       /**
+    * Fade-move animation for second dialog
+    */
+
+       /* at start */
+       .my-mfp-slide-bottom .zoom-anim-dialog {
+           opacity: 0;
+           -webkit-transition: all 0.2s ease-out;
+           -moz-transition: all 0.2s ease-out;
+           -o-transition: all 0.2s ease-out;
+           transition: all 0.2s ease-out;
+           -webkit-transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
+           -moz-transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
+           -ms-transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
+           -o-transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
+           transform: translateY(-20px) perspective( 600px ) rotateX( 10deg );
+       }
+
+       /* animate in */
+       .my-mfp-slide-bottom.mfp-ready .zoom-anim-dialog {
+           opacity: 1;
+           -webkit-transform: translateY(0) perspective( 600px ) rotateX( 0 );
+           -moz-transform: translateY(0) perspective( 600px ) rotateX( 0 );
+           -ms-transform: translateY(0) perspective( 600px ) rotateX( 0 );
+           -o-transform: translateY(0) perspective( 600px ) rotateX( 0 );
+           transform: translateY(0) perspective( 600px ) rotateX( 0 );
+       }
+
+       /* animate out */
+       .my-mfp-slide-bottom.mfp-removing .zoom-anim-dialog {
+           opacity: 0;
+           -webkit-transform: translateY(-10px) perspective( 600px ) rotateX( 10deg );
+           -moz-transform: translateY(-10px) perspective( 600px ) rotateX( 10deg );
+           -ms-transform: translateY(-10px) perspective( 600px ) rotateX( 10deg );
+           -o-transform: translateY(-10px) perspective( 600px ) rotateX( 10deg );
+           transform: translateY(-10px) perspective( 600px ) rotateX( 10deg );
+       }
+
+       /* Dark overlay, start state */
+       .my-mfp-slide-bottom.mfp-bg {
+           opacity: 0;
+           -webkit-transition: opacity 0.3s ease-out;
+           -moz-transition: opacity 0.3s ease-out;
+           -o-transition: opacity 0.3s ease-out;
+           transition: opacity 0.3s ease-out;
+       }
+       /* animate in */
+       .my-mfp-slide-bottom.mfp-ready.mfp-bg {
+           opacity: 0.8;
+       }
+       /* animate out */
+       .my-mfp-slide-bottom.mfp-removing.mfp-bg {
+           opacity: 0;
+       }
+</style>
+
+<script>
+
+    $(document).ready(function () {
+        $('.popup-with-zoom-anim').magnificPopup({
+            type: 'inline',
+
+            fixedContentPos: false,
+            fixedBgPos: true,
+
+            overflowY: 'auto',
+
+            closeBtnInside: true,
+            preloader: false,
+
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-zoom-in'
+        });
+        
+    });
+</script>
+
+<div class="cart-dropdown">
+    <a href="#" class="cart-dropdown-icon">
+        <i class="minicart-icon"></i>
+        <span class="cart-info">
+            <span class="cart-qty">
+                @Model.SepetUrun.Count
+            </span>
+            <span class="cart-text">Ürün </span>
+        </span>
+    </a>
+
+    <div class="cart-dropdownmenu right">
+        <div class="dropdownmenu-wrapper">
+            <div class="cart-products">
+                @foreach (var item in Model.SepetUrun)
+                {
+
+                <div class="product product-sm">
+                    <a href="@Url.Action("SepettenUrunCikar","Sepet",new { urunId=item.Id })" class="btn-remove" title="Remove Product">
+                        <i class="fa fa-times"></i>
+                    </a>
+                    <figure class="product-image-area">
+                        <a href="@Url.Action("Details","Urun",new { id=item.Urun.Id })" title="Product Name" class="product-image">
+                            <img src="@(item.Urun.UrunImages.Count != 0 ? item.Urun.UrunImages.FirstOrDefault().UrunImageUrl : "/Content/img/demos/shop/products/product1-2.jpg")
+                                     " alt="Product Name">
+                        </a>
+                    </figure>
+                    <div class="product-details-area">
+                        <h2 class="product-name">
+                            <a href="@Url.Action("Details","Urun",new { id=item.Urun.Id })" title="Product Name">
+                                @item.Urun.UrunAdi
+                            </a>
+                        </h2>
+
+                        <div class="cart-qty-price">
+                            @item.Miktar
+                            X
+                            <span class="product-price">
+                                @item.Urun.UrunFiyati ₺
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                }
+
+
+            </div>
+
+            <div class="cart-totals">
+                Toplam: <span>@Model.Toplam ₺</span>
+            </div>
+
+            <div class="cart-actions">
+                @if (@Model.SepetUrun.Count > 0)
+                {
+                    <a href="@Url.Action("Index","Sepet")" class="btn btn-primary">Sepeti Göster</a>
+                    <a class="popup-with-zoom-anim btn btn-primary" href="#small-dialog">Sipariş Onayla</a>
+                    
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="small-dialog" class="zoom-anim-dialog mfp-hide">
+    <h1>Sipariş Onayla</h1>
+    <p>
+        <div class="cart-products">
+
+            @foreach (var item in Model.SepetUrun)
+            {
+
+                <div class="product product-sm">
+                    <a href="@Url.Action("SepettenUrunCikar","Sepet",new { urunId=item.Id })" class="btn-remove" title="Remove Product">
+                        <i class="fa fa-times"></i>
+                    </a>
+                    <figure class="product-image-area">
+                        <a href="@Url.Action("Details","Urun",new { id=item.Urun.Id })" title="Product Name" class="product-image">
+                            <img src="@(item.Urun.UrunImages.Count != 0 ? item.Urun.UrunImages.FirstOrDefault().UrunImageUrl : "/Content/img/demos/shop/products/product1-2.jpg")
+                                     " alt="Product Name">
+                        </a>
+                    </figure>
+                    <div class="product-details-area">
+                        <h2 class="product-name">
+                            <a href="@Url.Action("Details","Urun",new { id=item.Urun.Id })" title="Product Name">
+                                @item.Urun.UrunAdi
+                            </a>
+                        </h2>
+
+                        <div class="cart-qty-price">
+                            @item.Miktar
+                            X
+                            <span class="product-price">
+                                @item.Urun.UrunFiyati ₺
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </p>
+    <p>
+        <a href="@Url.Action("Create","Siparis")" class="btn btn-primary">Sipariş Onayla</a>
+    </p>
+</div>
+
+
+

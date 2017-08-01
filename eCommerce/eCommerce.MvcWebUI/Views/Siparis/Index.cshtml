@@ -1,0 +1,104 @@
+﻿@model IEnumerable<eCommerce.Entities.Concrete.Siparis>
+
+
+<section class="page-header mb-lg">
+
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="/">Anasayfa</a></li>
+
+            <li class="active">Siparis</li>
+        </ul>
+    </div>
+</section>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9 col-md-push-3 my-account form-section">
+            <div class="cart">
+                <div class="container">
+                    <div>
+                        @TempData["SiparisSonuc"]
+                    </div>
+                    <h1 class="h2 heading-primary mt-lg clearfix">
+                        <span>Aktif Siparişler</span>
+
+                    </h1>
+
+                    <div class="row">
+                        <div class="col-md-9 col-lg-9">
+                            <div class="cart-table-wrap">
+                                @if (Model.Count() == 0)
+                                {
+                                    <div>Aktif Sipariş Bulunmamaktadır. Ürünlerinizi sepete ekleyip daha sonra siparişinizi onaylayınız.</div>
+                                }
+                                else
+                                {
+                                    <table class="cart-table">
+                                        <thead>
+                                            <tr>
+                                                <th>@Html.DisplayNameFor(model => model.Profil.TCKimlikNo)</th>
+                                                <th>Ürünler</th>
+                                                <th>Ödeme Tutarı</th>
+                                                <th>Sipariş Tarihi</th>
+                                                <th>Sipariş Adresi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model)
+                                            {
+
+                                                <tr>
+                                                    <td><span class="text-primary">@Html.DisplayFor(modelItem => item.Profil.TCKimlikNo)</span></td>
+                                                    <td>
+                                                        <span class="text-primary">
+                                                            @foreach (var urunler in item.SiparisUrunler)
+                                                            {
+                                                                @urunler.UrunAdi <br />
+                                                                @("(" + @urunler.UrunFiyati + "₺  x " + @urunler.UrunMiktar + ")") <br />
+                                                            }
+                                                        </span>
+                                                    </td>
+                                                    <td><span class="text-primary">@item.ToplamOdeme ₺</span></td>
+                                                    <td><span class="text-primary">@Html.DisplayFor(modelItem => item.SiparisTarihi)</span></td>
+
+                                                    <td>
+                                                        <a href="@Url.Action("Details", new { id = item.SiparisId })" class="btn btn-default hover-primary">Detaylar</a>
+                                                        <a href="@Url.Action("Delete", new { id = item.SiparisId })" class="btn btn-default hover-primary">Sil</a>
+                                                        <a href="@Url.Action("OdemeYap", new { id = item.SiparisId })" class="btn btn-default hover-primary">Ödeme Yap</a>
+
+                                                    </td>
+                                                </tr>
+                                            }
+
+                                        </tbody>
+
+                                    </table>
+                                }
+
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-md-pull-9">
+            <aside class="sidebar">
+
+                <h4>Sipariş Bilgileri</h4>
+                <ul class="nav nav-list">
+                    <li>
+                        @Html.ActionLink("Aktif Siparişler", "Index", "Siparis", null, new { @class = "active" })
+                    </li>
+                    <li>
+                        @Html.ActionLink("Geçmiş Siparişler", "Gecmis", "Siparis", null, new { @class = "active" })
+                    </li>
+                </ul>
+
+            </aside>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,105 @@
+﻿@model eCommerce.Entities.Concrete.Profil
+@{
+    ViewBag.Title = "Profil";
+}
+
+<section class="page-header mb-lg">
+
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="/">Anasayfa</a></li>
+
+            <li class="active">Profil</li>
+        </ul>
+    </div>
+</section>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9 col-md-push-3 my-account form-section">
+            <h1 class="h2 heading-primary font-weight-normal">Profil Bilgilerini Düzenle</h1>
+
+            <div class="featured-box featured-box-primary featured-box-flat featured-box-text-left mt-md">
+                <div class="box-content">
+
+                    @using (Html.BeginForm("Index", "Manage", FormMethod.Post, new { role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+
+                        <h4 class="heading-primary text-uppercase mb-lg">KİŞİSEL BİLGİLER</h4>
+                        <div class="row">
+                            <div class="col-sm-4 col-md-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.TCKimlikNo, new { @class = "font-weight-normal" })
+                                    <span class="required">*</span>
+                                    @Html.TextBoxFor(m => m.TCKimlikNo, new { @class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Ad, new { @class = "font-weight-normal" })
+                                    <span class="required">*</span>
+                                    @Html.TextBoxFor(m => m.Ad, new { @class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-5">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Soyad, new { @class = "font-weight-normal" })
+                                    <span class="required">*</span>
+                                    @Html.TextBoxFor(m => m.Soyad, new { @class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 col-md-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.DogumTarihi, new { @class = "font-weight-normal" })
+                                    <span class="required">*</span>
+                                    @Html.TextBoxFor(m => m.DogumTarihi, "{0:yyyy-MM-dd}", new { type = "date", @class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-sm-4 col-md-3">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Telefon, new { @class = "font-weight-normal" })
+
+                                    @Html.TextBoxFor(m => m.Telefon, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <p class="required mt-lg mb-none">* Gerekli</p>
+
+                                    <div class="form-action clearfix mt-none">
+                                        <a href="/Home/Index" class="pull-left"><i class="fa fa-angle-double-left"></i> Anasayfa</a>
+
+                                        <input type="submit" formmethod="post" class="btn btn-primary" value="Güncelle">
+                                    </div>
+                                </div>
+                            </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-md-pull-9">
+            <aside class="sidebar">
+
+                <h4>Profil Bilgileri</h4>
+                <ul class="nav nav-list">
+                    <li>
+                        @Html.ActionLink("Kişisel Bilgiler", "Index", "Manage", null, new { @class = "active" })
+                    </li>
+                    <li>
+                        @Html.ActionLink("Adres Bilgileri", "Adres", "Manage", null, new { @class = "active" })
+                    </li>
+                </ul>
+
+            </aside>
+        </div>
+    </div>
+</div>

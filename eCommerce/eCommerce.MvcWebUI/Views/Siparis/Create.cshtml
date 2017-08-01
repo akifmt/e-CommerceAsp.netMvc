@@ -1,0 +1,67 @@
+﻿@model eCommerce.Entities.Concrete.Siparis
+
+<section class="form-section">
+    <div class="container">
+        <h1 class="h2 heading-primary font-weight-normal mb-md mt-lg">Sipariş Onayla</h1>
+
+        <div class="featured-box featured-box-primary featured-box-flat featured-box-text-left mt-md">
+            <div class="box-content">
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @Html.HiddenFor(x => x.ProfilId)
+
+    
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-content">
+                                <h3 class="heading-text-color font-weight-normal">Yeni Sipariş</h3>
+                                <p>
+                                    Ürünler: <br />
+                                    @foreach (var item in Model.SiparisUrunler)
+                                    {
+                                        @(item.UrunAdi + " (" + item.UrunFiyati + "₺ x " + @item.UrunMiktar+ ")") <br />
+                                    } 
+                                     <br />
+                                    Toplam:
+                                    @Model.ToplamOdeme ₺ <br />
+                                    <br />
+                                    Siparişi onaylıyor musunuz?
+                                    <div class="form-group">
+                                        <div class="col-md-10">
+                                            <a href="/Home/Index" class="btn btn-default">Vazgeç</a>
+                                            <input type="submit" value="Onayla" class="btn btn-primary" />
+                                            
+                                        </div>
+                                    </div>
+                                </p>
+                            </div>
+
+                            
+                        </div>
+                    </div>
+             
+
+
+                
+
+
+
+}
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</section>

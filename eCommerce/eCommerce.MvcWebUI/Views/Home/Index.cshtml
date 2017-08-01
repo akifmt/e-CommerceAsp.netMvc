@@ -1,0 +1,163 @@
+﻿@model List<eCommerce.Entities.Concrete.Urun>
+
+<div class="container">
+    <div class="homepage-bar">
+        <div class="row">
+            <div class="col-md-4">
+                <i class="fa fa-truck bar-icon"></i>
+                <div class="bar-textarea">
+                    <h3>ÜCRETSİZ KARGO</h3>
+                    <p>Tüm kargolarınız ücretsiz.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <i class="fa fa-dollar bar-icon"></i>
+                <div class="bar-textarea">
+                    <h3>ÖDEME GARANTİSİ</h3>
+                    <p>%100 Garanti.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <i class="fa fa-support bar-icon"></i>
+                <div class="bar-textarea">
+                    <h3> 24/7 Destek</h3>
+                    <p>Online Destek.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row row-sm mb-lg">
+        <div class="col-md-9 col-md-push-3">
+            <div class="banners-container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <a href="#" class="banner">
+                            <img src="/Content/Images/kambannar01.jpg" alt="Banner">
+                        </a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="#" class="banner">
+                            <img src="/Content/Images/kambannar02.jpg" alt="Banner">
+                        </a>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <a href="#" class="banner">
+                            <img src="/Content/Images/kambannar03.jpg" alt="Banner">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="slider-title">
+                <span class="inline-title">ÜRÜNLER</span>
+                <span class="line"></span>
+            </h2>
+
+            <div class="owl-carousel owl-theme manual featured-products-carousel">
+
+                @foreach (var item in Model)
+                {
+                    <div class="product">
+                        <figure class="product-image-area">
+                            <a href="@Url.Action("Details","Urun",new { id=item.Id })" title="@item.UrunAdi" class="product-image">
+                                <img src="@(item.UrunImages.Count != 0 ? item.UrunImages.FirstOrDefault().UrunImageUrl : "/Content/img/demos/shop/products/product1-2.jpg")">
+                                <img src="@(item.UrunImages.Count != 0 ? item.UrunImages.Skip(1).FirstOrDefault().UrunImageUrl : "/Content/img/demos/shop/products/product1-2.jpg")" alt="@item.UrunAdi" class="product-hover-image">
+                            </a>
+
+                            <a href="@Url.Action("Details","Urun",new { id=item.Id })" class="product-quickview">
+                                <i class="fa fa-share-square-o"></i>
+                                <span>Detaylar</span>
+                            </a>
+                            <div class="product-label"><span class="discount">2. ÜRÜN %50</span></div>
+                            <div class="product-label"><span class="new">YENİ</span></div>
+                        </figure>
+                        <div class="product-details-area">
+                            <h2 class="product-name"><a href="@Url.Action("Details","Urun",new { id=item.Id })" title="Ürün Başlık">@item.UrunAdi</a></h2>
+                            <div class="product-ratings">
+                                <div class="ratings-box">
+                                    <div class="rating" style="width:90%"></div>
+                                </div>
+                            </div>
+
+                            <div class="product-price-box">
+                                <span class="old-price">@item.UrunFiyati ₺</span>
+                                <span class="product-price">@item.UrunFiyati ₺</span>
+                            </div>
+
+                            <div class="product-actions">
+                                <a href="#" class="addtowishlist" title="Beğen">
+                                    <i class="fa fa-heart"></i>
+                                </a>
+                                <a href="@Url.Action("SepeteUrunEkle","Sepet",new { urunId=item.Id })" class="addtocart" title="Sepete Ekle">
+                                    <i class="fa fa-shopping-cart"></i>
+                                    <span>Sepete Ekle</span>
+                                </a>
+                                <a href="#" class="comparelink" title="Karşılaştır">
+                                    <i class="glyphicon glyphicon-signal"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+
+
+            </div>
+
+            <hr class="mt-xlg mb-xl">
+
+        </div>
+
+        <aside class="col-md-3 col-md-pull-9">
+            <div class="home-side-menu-container">
+                <h2 class="side-menu-title">MENÜ</h2>
+                <ul class="home-side-menu">
+
+                    <li><a href="/">Anasayfa</a></li>
+
+                    <li class="dropdown-full-color dropdown-primary">
+                        <a href="#">
+                            Kategoriler <i class="fa fa-caret-right"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            @foreach (var item in (List<eCommerce.Entities.Concrete.Kategori>)ViewBag.Kategoriler)
+                            {
+                            <li>
+                                @Html.ActionLink(linkText: item.KategoriAdi, actionName: "Index", controllerName:"Kategori",routeValues: new { id = item.Id }, htmlAttributes: "")
+                            </li>
+                            }
+
+                        </ul>
+                    </li>
+                    <li>
+                        @Html.ActionLink("İletişim", "Contact", "Home")
+
+                    </li>
+                    <li>
+                        @Html.ActionLink("Hakkında", "About", "Home")
+
+                    </li>
+                </ul>
+            </div>
+
+            <h4></h4>
+            <div class="owl-carousel owl-theme" data-plugin-options="{'items':1}">
+                <a href="#">
+                    <img class="img-responsive" src="/Content/Images/kambannar03.jpg" alt="Banner">
+                </a>
+                <a href="#">
+                    <img class="img-responsive" src="/Content/Images/kambannar02.jpg" alt="Banner">
+                </a>
+                <a href="#">
+                    <img class="img-responsive" src="/Content/Images/kambannar01.jpg" alt="Banner">
+                </a>
+            </div>
+        </aside>
+    </div>
+
+</div>
